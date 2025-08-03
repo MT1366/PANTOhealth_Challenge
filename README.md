@@ -25,7 +25,6 @@ A dashboard that dynamically renders single/multi-series charts from JSON data u
 ## Quick Start
 
 1. **Clone the repository**
-   ```bash
 [   git clone https://github.com/your-username/d3-chart-dashboard.git
 ](https://github.com/MT1366/PANTOhealth_Challenge.git)
 cd PANTOhealth_Challenge
