@@ -1,53 +1,17 @@
-import { useState, useEffect } from "react";
+import { useChartData } from "../hooks/useChartData";
 import ChartRenderer from "./ChartRenderer";
-import type { ChartData } from "./types";
 
 const ChartWrapper = () => {
-  const [charts, setCharts] = useState<ChartData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: chartsData, isLoading, isError } = useChartData();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/data.json");
-        if (!response.ok) throw new Error("Failed to fetch data");
-
-        const data: ChartData[] = await response.json();
-
-        // Validate data structure
-        const isValid = data.every(
-          (chart) =>
-            chart.title &&
-            Array.isArray(chart.data) &&
-            chart.data.every(
-              (point) =>
-                Array.isArray(point) &&
-                point.length === 2 &&
-                typeof point[0] === "number"
-            )
-        );
-
-        if (!isValid) throw new Error("Invalid data structure");
-
-        setCharts(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) return <div className="text-center py-8">Loading charts...</div>;
-  if (error) return <div className="text-red-500 p-4">Error: {error}</div>;
+  if (isLoading)
+    return <div className="text-center py-8">Loading charts...</div>;
+  if (isError) return <div className="text-red-500 p-4">Error: {isError}</div>;
 
   return (
     <div>
-      {charts.length > 0 ? (
-        charts.map((chart, index) => (
+      {chartsData.length > 0 ? (
+        chartsData.map((chart, index) => (
           <ChartRenderer key={`chart-${index}`} {...chart} />
         ))
       ) : (

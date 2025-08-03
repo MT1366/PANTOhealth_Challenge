@@ -1,5 +1,6 @@
 export type DataPoint = [number, number | null] | [number, (number | null)[]];
-export type ChartData = {
+
+export type ChartDataType = {
   title: string;
   data: DataPoint[];
 };

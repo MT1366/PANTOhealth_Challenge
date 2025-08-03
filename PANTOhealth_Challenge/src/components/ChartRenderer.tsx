@@ -1,11 +1,15 @@
 import * as d3 from "d3";
 import { useEffect, useRef } from "react";
-import { isMultiSeries, type ChartData, type ChartType } from "./types";
+import {
+  isMultiSeries,
+  type ChartDataType,
+  type ChartType,
+} from "../types/types";
 
 const MARGIN = { top: 30, right: 30, bottom: 50, left: 50 };
 const COLORS = ["#1f77b4", "#2ca02c", "#d62728"]; // Blue, Green, Red
 
-const ChartRenderer = ({ title, data }: ChartData) => {
+const ChartRenderer = ({ title, data }: ChartDataType) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const chartType: ChartType = isMultiSeries(data) ? "multi" : "single";
